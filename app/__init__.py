@@ -10,6 +10,10 @@ app = Flask(__name__)
 with open('model/RF_BODYFAT_model.pkl', 'rb') as f:
     model = pickle.load(f)
     
+# 피클 파일에서 스케일러 객체 로드
+with open('model/RF_BODYFAT_scaler.pkl', 'rb') as f:
+    scaler = pickle.load(f)
+    
 # Main page
 @app.route('/')
 def index():
@@ -40,10 +44,10 @@ def predict():
     # json으로 변환
     input_json = json.dumps(input_data)
     input_data_arr = np.array([list(input_data.values())]).astype(float)
-    input_data_arr = input_data_arr.reshape(1, -1)
+    test_predict = scaler.transform(input_data_arr.reshape(1, -1))
     
     # 예측 수행
-    prediction = model.predict(input_data_arr)
+    prediction = model.predict(test_predict)
 
     #웹 페이지 리턴
     return render_template('result.html', prediction=prediction)

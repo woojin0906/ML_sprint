@@ -7,7 +7,7 @@ import numpy as np
 app = Flask(__name__)
 
 # 피클 파일에서 훈련된 모델을 로드
-with open('RF_BODYFAT_model.pkl', 'rb') as f:
+with open('model/RF_BODYFAT_model.pkl', 'rb') as f:
     model = pickle.load(f)
     
 # Main page
@@ -41,7 +41,6 @@ def predict():
     input_json = json.dumps(input_data)
     input_data_arr = np.array([list(input_data.values())]).astype(float)
     input_data_arr = input_data_arr.reshape(1, -1)
-    print(input_data_arr)
     
     # 예측 수행
     prediction = model.predict(input_data_arr)

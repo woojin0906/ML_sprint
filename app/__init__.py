@@ -3,7 +3,6 @@ import pickle
 import json
 import numpy as np
 
-
 app = Flask(__name__)
 
 # 피클 파일에서 훈련된 모델을 로드
